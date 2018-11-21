@@ -125,5 +125,8 @@
     <Resource Include="Resources\Gear.png" />
     <Resource Include="Resources\Time.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Question.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
