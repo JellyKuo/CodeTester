@@ -101,7 +101,7 @@
                 <Button x:Name="btnRunFailed" Width="100" Content="Run Failed" Margin="5,0,5,0" Click="BtnRunFailed_Click"/>
                 <Button x:Name="btnRunAll" Width="100" Content="Run All" Margin="5,0,0,0" Click="BtnRunAll_Click"/>
             </StackPanel>
-            <DataGrid x:Name="dgResult" Margin="10,10,10,10" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="20" Grid.Row="3">
+            <DataGrid x:Name="dgResult" Margin="10,10,10,10" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="22" Grid.Row="3">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Test.ID}" ClipboardContentBinding="{x:Null}" Header="ID"/>
                     <DataGridTextColumn Binding="{Binding Test.Name}" ClipboardContentBinding="{x:Null}" Header="Name"/>
