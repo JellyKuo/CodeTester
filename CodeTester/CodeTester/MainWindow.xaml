@@ -1,0 +1,151 @@
+﻿<Window x:Class="NPSC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NPSC"
+        mc:Ignorable="d"
+        Title="CodeTester" Height="700" Width="800" AllowDrop="True" Drop="Window_Drop" Loaded="Window_Loaded">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem x:Name="mItemTimeLimit" Header="Time Limit: " Foreground="White" Background="SteelBlue" Click="MItemTimeLimit_Click"/>
+            <MenuItem Header="Options" HorizontalAlignment="Right" Visibility="Collapsed"/>
+        </Menu>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="10,10,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Executable Path: "/>
+                <TextBox x:Name="txtExePath" Grid.Column="1" Margin="10,0,10,0"/>
+                <Button x:Name="btnExePathBrowse" Content="..." Grid.Column="2" Width="25" HorizontalAlignment="Left" Click="BtnExePathBrowse_Click"/>
+            </Grid>
+            <Grid Margin="10,10,10,0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Header="Test data">
+                    <DataGrid x:Name="dgTestData" Height="150" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ID}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                            <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding Size}" ClipboardContentBinding="{x:Null}" Header="Size"/>
+                            <DataGridTemplateColumn Header="Details" Width="75">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Details" Click="dgTests_Details_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Grid MaxWidth="{Binding ActualWidth, ElementName=dgTestData}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Input"/>
+                                    <TextBlock Text="Answer" Grid.Column="1"/>
+                                    <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Input.Content}" Grid.Row="1"/>
+                                    <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Answer.Content}" Grid.Row="1" Grid.Column="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </GroupBox>
+                <GroupBox Header="Executable information" Grid.Column="1">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Name: " VerticalAlignment="Center"/>
+                        <TextBlock Text="Created at: " Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBlock Text="Modified at: " Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBlock Text="Size: " Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="txtExeName" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Column="1"/>
+                        <TextBlock x:Name="txtExeCreatedAt" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Column="1" Grid.Row="1"/>
+                        <TextBlock x:Name="txtExeModifiedAt" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Column="1" Grid.Row="2"/>
+                        <TextBlock x:Name="txtExeSize" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Column="1" Grid.Row="3"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,10,0" Grid.Row="2">
+                <Button x:Name="btnClear" Width="100" Content="Clear" Margin="0,0,5,0" Click="BtnClear_Click"/>
+                <Button x:Name="btnRunID" Width="100" Content="Run Single" Margin="5,0,5,0" Click="BtnRunID_Click"/>
+                <Button x:Name="btnRunFailed" Width="100" Content="Run Failed" Margin="5,0,5,0" Click="BtnRunFailed_Click"/>
+                <Button x:Name="btnRunAll" Width="100" Content="Run All" Margin="5,0,0,0" Click="BtnRunAll_Click"/>
+            </StackPanel>
+            <DataGrid x:Name="dgResult" Margin="10,10,10,10" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="20" Grid.Row="3">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Test.ID}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                    <DataGridTextColumn Binding="{Binding Test.Name}" ClipboardContentBinding="{x:Null}" Header="Name"/>
+                    <DataGridTemplateColumn Width="SizeToCells"  Header="Result">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" />
+                                    <TextBlock Text="{Binding ResultString}" Margin="2,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding TimeTaken}" ClipboardContentBinding="{x:Null}" Header="Time taken"/>
+                    <DataGridTemplateColumn Header="Details" Width="75">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Details" IsEnabled="{Binding IsCompleted}" Click="dgResults_Details_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Grid MaxWidth="{Binding ActualWidth, ElementName=dgResult}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="200"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Input"/>
+                            <TextBlock Text="Answer" Grid.Column="1"/>
+                            <TextBlock Text="Output" Grid.Column="2"/>
+                            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Test.Input.Content}" Grid.Row="1"/>
+                            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Test.Answer.Content}" Grid.Row="1" Grid.Column="1"/>
+                            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Output}" Grid.Row="1" Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</Window>
