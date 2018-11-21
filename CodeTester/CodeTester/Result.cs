@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace NPSC
+namespace CodeTester
 {
     public class Result
     {
@@ -18,15 +18,15 @@ namespace NPSC
                 switch (ResultType)
                 {
                     case ResultTypes.Running:
-                        return new BitmapImage(new Uri("pack://application:,,,/NPSC;component/Resources/Gear.png"));
+                        return new BitmapImage(new Uri("pack://application:,,,/CodeTester;component/Resources/Gear.png"));
                     case ResultTypes.AC:
-                        return new BitmapImage(new Uri("pack://application:,,,/NPSC;component/Resources/Check.png"));
+                        return new BitmapImage(new Uri("pack://application:,,,/CodeTester;component/Resources/Check.png"));
                     case ResultTypes.WA:
-                        return new BitmapImage(new Uri("pack://application:,,,/NPSC;component/Resources/Cross.jpg"));
+                        return new BitmapImage(new Uri("pack://application:,,,/CodeTester;component/Resources/Cross.jpg"));
                     case ResultTypes.TLE:
-                        return new BitmapImage(new Uri("pack://application:,,,/NPSC;component/Resources/Time.png"));
+                        return new BitmapImage(new Uri("pack://application:,,,/CodeTester;component/Resources/Time.png"));
                 }
-                return new BitmapImage(new Uri("pack://application:,,,/NPSC;component/Resources/Question.png"));
+                return new BitmapImage(new Uri("pack://application:,,,/CodeTester;component/Resources/Question.png"));
             }
         }
 

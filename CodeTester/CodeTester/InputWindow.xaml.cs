@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace NPSC
+namespace CodeTester
 {
     /// <summary>
     /// InputWindow.xaml 的互動邏輯
