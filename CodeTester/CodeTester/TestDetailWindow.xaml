@@ -12,10 +12,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <GroupBox Margin="10" Header="Input">
-            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Input.Content}" Grid.Row="1" Margin="5"/>
+            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Input.Content}" Grid.Row="1" Margin="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
         </GroupBox>
         <GroupBox Margin="10" Header="Answer" Grid.Column="1">
-            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Answer.Content}" Grid.Row="1" Margin="5"/>
+            <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Answer.Content}" Grid.Row="1" Margin="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
         </GroupBox>
     </Grid>
 </Window>
